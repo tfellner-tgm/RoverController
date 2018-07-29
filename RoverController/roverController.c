@@ -7,32 +7,43 @@
 
 #include <windows.h>
 
-// function declarations
+/* function declarations */
+void setupSockets();
 int setupSocket(int port);
 char * sendAndRecv(int networkSocket, char toSend[256]);
 void sendAndNoRecv(int networkSocket, char toSend[256]);
+
+char * sendReady();
+char * getLeaderGPS();
+char * getLeaderDistance();
+
+void setForwardPower(int power);
+void incrementPower(int power);
+void setLRPower(int left, int right);
+void brake(int power);
+char * getRoverGPS();
+char * getRoverCompass();
+
+/* global variable declarations */
+int observerSocket;
+int roverSocket;
 
 void main() {
 	WSADATA mywsadata; //your wsadata struct, it will be filled by WSAStartup
 	WSAStartup(0x0202, &mywsadata); //0x0202 refers to version of sockets we want to us
 
-									// create a socket
-	int observerSocket = setupSocket(9999);
-	int roverSocket = setupSocket(9998);
-
 	printf("Connection successful\n");
 
-	printf(sendAndRecv(observerSocket, "ready\n"));
+	printf(sendReady());
 
-	sendAndNoRecv(roverSocket, "Rover,setLRPower(100,100)\n");
 
-	int i;
+	//printf("%s\n", sendAndRecv(observerSocket, "Leader,GPS()\n"));
+	//printf("%s\n", sendAndRecv(observerSocket, "Leader,Distance()\n"));
 
-	for (i = 0; i < 50; i++) {
-		Sleep(500);
-		printf("%s\n", sendAndRecv(observerSocket, "Leader,GPS()\n"));
-		printf("%s\n", sendAndRecv(observerSocket, "Leader,Distance()\n"));
-	}
+	//Sleep(5000);
+
+	//printf("%s\n", sendAndRecv(observerSocket, "Leader,GPS()\n"));
+	//printf("%s\n", sendAndRecv(observerSocket, "Leader,Distance()\n"));
 
 	printf("Press ENTER key to Continue\n");
 	getchar();
@@ -42,6 +53,11 @@ void main() {
 
 
 	return 0;
+}
+
+void setupSockets() {
+	observerSocket = setupSocket(9999);
+	roverSocket = setupSocket(9998);
 }
 
 int setupSocket(int port) {
@@ -93,4 +109,48 @@ void sendAndNoRecv(int networkSocket, char toSend[256]) {
 
 	// send data to the server
 	send(networkSocket, localToSend, strlen(localToSend), 0);
+}
+
+char * sendReady() {
+	return sendAndRecv(observerSocket, "ready\n");
+}
+
+char * getLeaderGPS() {
+	return sendAndRecv(observerSocket, "Leader,GPS()\n");
+}
+
+char * getLeaderDistance() {
+	return sendAndRecv(observerSocket, "Leader,Distance()\n");
+}
+
+void setForwardPower(int power) {
+	char * buf;
+	sprintf(buf, "Rover,setForwardPower(%d)\n", power);
+	sendAndNoRecv(roverSocket, buf);
+}
+
+void incrementPower(int power) {
+	char * buf;
+	sprintf(buf, "Rover,incrementPower(%d)\n", power);
+	sendAndNoRecv(roverSocket, buf);
+}
+
+void setLRPower(int left, int right) {
+	char * buf;
+	sprintf(buf, "Rover,setLRPower(%d,%d)\n", left, right);
+	sendAndNoRecv(roverSocket, buf);
+}
+
+void brake(int power) {
+	char * buf;
+	sprintf(buf, "Rover,brake(%d)\n", power);
+	sendAndNoRecv(roverSocket, buf);
+}
+
+char * getRoverGPS() {
+	return sendAndRecv(roverSocket, "Rover,GPS()\n");
+}
+
+char * getRoverCompass() {
+	return sendAndRecv(roverSocket, "Rover,getCompass()\n");
 }
