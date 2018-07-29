@@ -136,7 +136,6 @@ void incrementPower(int power) {
 void setLRPower(int left, int right) {
 	char buf[256];
 	sprintf_s(buf, 256, "Rover,setLRPower(%d,%d)\n", left, right);
-	printf(buf);
 	sendAndNoRecv(roverSocket, buf);
 }
 
