@@ -10,6 +10,7 @@
 /* function declarations */
 void setupSockets();
 int setupSocket(int port);
+void shutdownSockets();
 char * sendAndRecv(int networkSocket, char toSend[256]);
 void sendAndNoRecv(int networkSocket, char toSend[256]);
 
@@ -29,35 +30,27 @@ int observerSocket;
 int roverSocket;
 
 void main() {
-	WSADATA mywsadata; //your wsadata struct, it will be filled by WSAStartup
-	WSAStartup(0x0202, &mywsadata); //0x0202 refers to version of sockets we want to us
-
-	printf("Connection successful\n");
+	setupSockets();
 
 	printf(sendReady());
-
-
-	//printf("%s\n", sendAndRecv(observerSocket, "Leader,GPS()\n"));
-	//printf("%s\n", sendAndRecv(observerSocket, "Leader,Distance()\n"));
-
-	//Sleep(5000);
-
-	//printf("%s\n", sendAndRecv(observerSocket, "Leader,GPS()\n"));
-	//printf("%s\n", sendAndRecv(observerSocket, "Leader,Distance()\n"));
+	setLRPower(100, 100);
 
 	printf("Press ENTER key to Continue\n");
 	getchar();
 
-	shutdown(observerSocket, 2);
-	shutdown(roverSocket, 2);
-
+	shutdownSockets();
 
 	return 0;
 }
 
 void setupSockets() {
+	WSADATA mywsadata; //your wsadata struct, it will be filled by WSAStartup
+	WSAStartup(0x0202, &mywsadata); //0x0202 refers to version of sockets we want to us
+
 	observerSocket = setupSocket(9999);
 	roverSocket = setupSocket(9998);
+
+	printf("Connection successful\n");
 }
 
 int setupSocket(int port) {
@@ -80,6 +73,11 @@ int setupSocket(int port) {
 	}
 
 	return socketConnection;
+}
+
+void shutdownSockets() {
+	shutdown(observerSocket, 2);
+	shutdown(roverSocket, 2);
 }
 
 char * sendAndRecv(int networkSocket, char toSend[256]) {
@@ -124,26 +122,27 @@ char * getLeaderDistance() {
 }
 
 void setForwardPower(int power) {
-	char * buf;
-	sprintf(buf, "Rover,setForwardPower(%d)\n", power);
+	char buf[256];
+	sprintf_s(buf, 256, "Rover,setForwardPower(%d)\n", power);
 	sendAndNoRecv(roverSocket, buf);
 }
 
 void incrementPower(int power) {
-	char * buf;
-	sprintf(buf, "Rover,incrementPower(%d)\n", power);
+	char buf[256];
+	sprintf_s(buf, 256, "Rover,incrementPower(%d)\n", power);
 	sendAndNoRecv(roverSocket, buf);
 }
 
 void setLRPower(int left, int right) {
-	char * buf;
-	sprintf(buf, "Rover,setLRPower(%d,%d)\n", left, right);
+	char buf[256];
+	sprintf_s(buf, 256, "Rover,setLRPower(%d,%d)\n", left, right);
+	printf(buf);
 	sendAndNoRecv(roverSocket, buf);
 }
 
 void brake(int power) {
-	char * buf;
-	sprintf(buf, "Rover,brake(%d)\n", power);
+	char buf[256];
+	sprintf_s(buf, 256, "Rover,brake(%d)\n", power);
 	sendAndNoRecv(roverSocket, buf);
 }
 
