@@ -16,6 +16,9 @@ void brake(int power);
 char * getRoverGPS();
 char * getRoverCompass();
 
+double getFirstParam(char response[256]);
+double getSecondParam(char response[256]);
+
 /* global variable declarations */
 int observerSocket;
 int roverSocket;

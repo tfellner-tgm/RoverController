@@ -1,18 +1,27 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <sys/types.h>
 #include <WinSock2.h>
 
 #include <windows.h>
-#include "roverController.h"
+#include "roverCommunicationLib.h"
 
 void main() {
 	setupSockets();
 
 	printf(sendReady());
 	setLRPower(100, 100);
+
+	Sleep(2000);
+
+	char * distance = getLeaderDistance();
+	printf("%s\n", distance);
+	printf("%f\n", getFirstParam(distance));
+	// printf("%f", getSecondParam(getRoverGPS()));
+	// printf("%f", getSecondParam(getLeaderGPS()));
 
 	printf("Press ENTER key to Continue\n");
 	getchar();
@@ -130,4 +139,21 @@ char * getRoverGPS() {
 
 char * getRoverCompass() {
 	return sendAndRecv(roverSocket, "Rover,getCompass()\n");
+}
+
+double getFirstParam(char response[256]) {
+	char *next_token;
+	char * p = strtok_s(response, ",", &next_token);
+	p = strtok_s(NULL, ",", &next_token);
+
+	return atof(p);
+}
+
+double getSecondParam(char response[256]) {
+	char *next_token;
+	char * p = strtok_s(response, ",", &next_token);
+	p = strtok_s(NULL, ",", &next_token);
+	p = strtok_s(NULL, ",", &next_token);
+
+	return atof(p);
 }
