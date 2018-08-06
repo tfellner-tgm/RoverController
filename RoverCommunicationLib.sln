@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoverCommunicationLib", "RoverCommunicationLib\RoverCommunicationLib.vcxproj", "{DCEB432E-0D04-4FF0-BCB5-B79128009837}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoverController", "RoverController\RoverController.vcxproj", "{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Debug|x64.ActiveCfg = Debug|x64
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Debug|x64.Build.0 = Debug|x64
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Debug|x86.ActiveCfg = Debug|Win32
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Debug|x86.Build.0 = Debug|Win32
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Release|x64.ActiveCfg = Release|x64
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Release|x64.Build.0 = Release|x64
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Release|x86.ActiveCfg = Release|Win32
+		{DCEB432E-0D04-4FF0-BCB5-B79128009837}.Release|x86.Build.0 = Release|Win32
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Debug|x64.ActiveCfg = Debug|x64
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Debug|x64.Build.0 = Debug|x64
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Debug|x86.ActiveCfg = Debug|Win32
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Debug|x86.Build.0 = Debug|Win32
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Release|x64.ActiveCfg = Release|x64
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Release|x64.Build.0 = Release|x64
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Release|x86.ActiveCfg = Release|Win32
+		{D7ECC6F7-A685-481B-B43F-3E90ED059DD6}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAD2F92A-10C8-4E00-BE37-C5BD95758B73}
+	EndGlobalSection
+EndGlobal

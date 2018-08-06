@@ -1,0 +1,26 @@
+/* ***************************************************
+ * Model File: Model::Impelementation::RoverController::RoverController
+ * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
+ * 
+ * 2018-08-06  - 14:32
+ * ***************************************************
+ *  */
+#ifndef H_ROVERCONTROLLER
+#define H_ROVERCONTROLLER
+
+#include "roverCommunicationLib.h" /* Include for 'relation to classifier' 'roverCommunicationLib' */
+#include <Windows.h>/* Include for 'relation to classifier' 'Windows' */
+#include <stdio.h>/* Include for 'relation to classifier' 'stdio' */
+
+typedef int RoverController;
+
+/* Returns a pointer to the statically allocated structure for RoverController.
+ * Automatically added and generated.
+ * @return Pointer to the statically allocated structure for RoverController. */
+RoverController* RoverController_new(void);
+
+/* Activity RoverController of class RoverController */
+void RoverController_RoverController(RoverController* const me);
+
+#endif /* #ifndef H_ROVERCONTROLLER */
+
