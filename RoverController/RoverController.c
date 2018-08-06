@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::RoverController
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-06  - 14:32
+ * 2018-08-07  - 01:04
  * ***************************************************
  *  */
 #include "RoverController.h"
@@ -18,18 +18,10 @@ RoverController* RoverController_new(void)
     return &RoverController_me;
 }
 
-/* Activity RoverController of class RoverController */
-void RoverController_RoverController(RoverController* const me)
+/* Activity DistanceHandler of class RoverController */
+void RoverController_DistanceHandler(RoverController* const me)
 {
     /* start of activity code */
-    /* SyncableUserCode{5135E900-BBFF-4a1b-8A14-9FD9614E6A32}:4BRUDMvkxh */
-    setupSockets();
-    /* SyncableUserCode{5135E900-BBFF-4a1b-8A14-9FD9614E6A32} */
-
-    /* SyncableUserCode{94FE212D-CE85-4c82-9D2B-BC9AFCD5AB6F}:MOJ4otldIS */
-    printf(sendReady());
-    /* SyncableUserCode{94FE212D-CE85-4c82-9D2B-BC9AFCD5AB6F} */
-
     /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69}:1PCs0k8xVQ */
     setLRPower(100, 100);
     /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69} */
@@ -49,10 +41,13 @@ void RoverController_RoverController(RoverController* const me)
     getchar();
     /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C} */
 
-    /* SyncableUserCode{7EC95727-927F-4fce-84FC-FD6668A71FB4}:1Ve2lKerso */
-    shutdownSockets();
-    /* SyncableUserCode{7EC95727-927F-4fce-84FC-FD6668A71FB4} */
+    return;
+}
 
+/* Activity AngleHandler of class RoverController */
+void RoverController_AngleHandler(RoverController* const me)
+{
+    /* start of activity code */
     return;
 }
 
