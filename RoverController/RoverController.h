@@ -2,13 +2,14 @@
  * Model File: Model::Impelementation::RoverController::RoverController
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-07  - 01:04
+ * 2018-08-07  - 17:46
  * ***************************************************
  *  */
 #ifndef H_ROVERCONTROLLER
 #define H_ROVERCONTROLLER
 
 #include "roverCommunicationLib.h" /* Include for 'relation to classifier' 'roverCommunicationLib' */
+#include <math.h>/* Include for 'relation to classifier' 'math' */
 #include <Windows.h>/* Include for 'relation to classifier' 'Windows' */
 #include <stdio.h>/* Include for 'relation to classifier' 'stdio' */
 

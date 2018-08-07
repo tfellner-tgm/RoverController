@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::Main
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-07  - 01:04
+ * 2018-08-07  - 17:46
  * ***************************************************
  *  */
 #include "Main.h"
@@ -21,7 +21,7 @@ Main* Main_new(void)
 /* Operation 'main' of class 'Main' */
 int main(Main* const me)
 {
-    /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C}:uvAFHN9hwf */
+    /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C}:GfHlKoXZnP */
     // setup sockets and print ready statements
     setupSockets();
     printf(sendReady());
@@ -38,6 +38,7 @@ int main(Main* const me)
     if (distanceHandler == NULL)
         ExitProcess(DistanceHandlerData);
 
+    Sleep(1);
     HANDLE angleHandler = CreateThread(NULL, 0, Main_AngleHandler, &AngleHandlerData, 0, NULL);
     if (angleHandler == NULL)
         ExitProcess(AngleHandlerData);
@@ -47,11 +48,10 @@ int main(Main* const me)
 
     WaitForMultipleObjects(2, ThreadHandles, TRUE, INFINITE);
 
+    brake(100);
+
     // shutdown sockets
     shutdownSockets();
-
-    printf("Since All threads executed"
-           " lets close their handles \n");
 
     // Close all thread handles upon completion.
     CloseHandle(distanceHandler);

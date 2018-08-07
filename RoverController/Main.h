@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::Main
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-07  - 01:04
+ * 2018-08-07  - 17:46
  * ***************************************************
  *  */
 #ifndef H_MAIN
@@ -10,8 +10,9 @@
 
 #include "roverCommunicationLib.h" /* Include for 'relation to classifier' 'roverCommunicationLib' */
 #include "RoverController.h" /* Include for 'relation to classifier' 'RoverController' */
-#include "Windows.h" /* Include for 'relation to classifier' 'Windows' */
-#include "stdio.h" /* Include for 'relation to classifier' 'stdio' */
+#include <math.h>/* Include for 'relation to classifier' 'math' */
+#include <Windows.h>/* Include for 'relation to classifier' 'Windows' */
+#include <stdio.h>/* Include for 'relation to classifier' 'stdio' */
 
 typedef int Main;
 

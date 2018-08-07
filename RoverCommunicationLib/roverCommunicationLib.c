@@ -50,10 +50,10 @@ char * sendAndRecv(int networkSocket, char toSend[256]) {
 	sendAndNoRecv(networkSocket, toSend);
 
 	// receive data from the server
-	char server_response[32];
+	char server_response[256];
 	int num = recv(networkSocket, &server_response, sizeof(server_response), 0);
 
-	char * newServerResponse = (char *)malloc(num); // allocate memory for new array, don't forget to free it later
+	char * newServerResponse = (char *)malloc(num); // allocate memory for new array
 	memcpy(newServerResponse, server_response, num); // copy data from old buf to new one
 
 	newServerResponse[num] = '\0';
@@ -120,18 +120,37 @@ char * getRoverCompass() {
 }
 
 double getFirstParam(char response[256]) {
+	int num = strlen(response);
+	char * newResponse = (char *)malloc(num); // allocate memory for new array
+	memcpy(newResponse, response, num - 1);
+	newResponse[num - 1] = '\0';
+
 	char *next_token;
-	char * p = strtok_s(response, ",", &next_token);
+	char * p = strtok_s(newResponse, ",", &next_token);
 	p = strtok_s(NULL, ",", &next_token);
 
-	return atof(p);
+	if (p) {
+		return atof(p);
+	} else {
+		return 0.0;
+	}
 }
 
 double getSecondParam(char response[256]) {
+	int num = strlen(response);
+	char * newResponse = (char *)malloc(num); // allocate memory for new array
+	memcpy(newResponse, response, num - 1);
+	newResponse[num - 1] = '\0';
+
 	char *next_token;
-	char * p = strtok_s(response, ",", &next_token);
+	char * p = strtok_s(newResponse, ",", &next_token);
 	p = strtok_s(NULL, ",", &next_token);
 	p = strtok_s(NULL, ",", &next_token);
 
-	return atof(p);
+	if (p) {
+		return atof(p);
+	} else {
+		return 0.0;
+	}
+
 }
