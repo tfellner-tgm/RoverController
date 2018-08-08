@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::Main
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-07  - 17:46
+ * 2018-08-08  - 13:38
  * ***************************************************
  *  */
 #include "Main.h"
@@ -21,10 +21,10 @@ Main* Main_new(void)
 /* Operation 'main' of class 'Main' */
 int main(Main* const me)
 {
-    /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C}:GfHlKoXZnP */
+    /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C}:vzsLfqCRxu */
     // setup sockets and print ready statements
     setupSockets();
-    printf(sendReady());
+    printf("%s\n", sendReady());
 
     // Data of Thread 1
     int DistanceHandlerData = 1;
@@ -38,7 +38,6 @@ int main(Main* const me)
     if (distanceHandler == NULL)
         ExitProcess(DistanceHandlerData);
 
-    Sleep(1);
     HANDLE angleHandler = CreateThread(NULL, 0, Main_AngleHandler, &AngleHandlerData, 0, NULL);
     if (angleHandler == NULL)
         ExitProcess(AngleHandlerData);
@@ -57,6 +56,7 @@ int main(Main* const me)
     CloseHandle(distanceHandler);
     CloseHandle(angleHandler);
 
+    getchar();
     /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C} */
 }
 

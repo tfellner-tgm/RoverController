@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::RoverController
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-07  - 17:46
+ * 2018-08-08  - 13:38
  * ***************************************************
  *  */
 #include "RoverController.h"
@@ -16,58 +16,6 @@ RoverController RoverController_me;
 RoverController* RoverController_new(void)
 {
     return &RoverController_me;
-}
-
-/* Activity DistanceHandler of class RoverController */
-void RoverController_DistanceHandler(RoverController* const me)
-{
-    double distance;
-    /* start of activity code */
-    /* Setup for loop */
-    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8}:1Onip9RC6L */
-    int i = 0;
-    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8} */
-
-    do
-    {
-        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C}:PZHteyRNjj */
-        distance = getFirstParam(getLeaderDistance());
-        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C} */
-
-        if (distance >= 12.5)
-        {
-            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D}:Z0oOaPsCNL */
-            int speed = (distance - 12.5) * 47.5 + 5;
-            if (speed > 100)
-            {
-                speed = 100;
-            }
-            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D} */
-
-            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69}:wzHY7aKkSb */
-            setLRPower(speed, speed);
-            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69} */
-        }
-        else if (distance < 12.5)
-        {
-            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9}:1TZC6m80BG */
-            setLRPower(0, 0);
-            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9} */
-        }
-        else
-        {
-        }
-        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5}:fSOJnDkv0w */
-        Sleep(150);
-        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5} */
-
-        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473}:bfu5YXWBGJ */
-        i++;
-        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473} */
-
-    } while (i < 400);
-
-    return;
 }
 
 /* Activity AngleHandler of class RoverController */
@@ -84,7 +32,7 @@ void RoverController_AngleHandler(RoverController* const me)
 
     do
     {
-        /* SyncableUserCode{882A85FD-23BB-40a9-9BB9-409454FA7DE9}:1UHWRoTU3q */
+        /* SyncableUserCode{882A85FD-23BB-40a9-9BB9-409454FA7DE9}:1bnvPDe7YN */
         char* leaderGPS = getLeaderGPS();
         double leaderX = getFirstParam(leaderGPS);
         double leaderY = getSecondParam(leaderGPS);
@@ -92,8 +40,6 @@ void RoverController_AngleHandler(RoverController* const me)
         char* roverGPS = getRoverGPS();
         double roverX = getFirstParam(roverGPS);
         double roverY = getSecondParam(roverGPS);
-
-        printf("LX: %f, LY: %f, RX: %f, RY: %f \n", leaderX, leaderY, roverX, roverY);
         /* SyncableUserCode{882A85FD-23BB-40a9-9BB9-409454FA7DE9} */
 
         /* SyncableUserCode{8653EBFB-4B86-4620-AF1C-1219AD3255B4}:mgEB7D869X */
@@ -128,15 +74,83 @@ void RoverController_AngleHandler(RoverController* const me)
         else
         {
         }
-        /* SyncableUserCode{BA029F47-0CC5-4459-B666-C925810EC15F}:8ULXkxBnt9 */
-        Sleep(300);
+        /* SyncableUserCode{BA029F47-0CC5-4459-B666-C925810EC15F}:kzKcnX40ja */
+        Sleep(200);
         /* SyncableUserCode{BA029F47-0CC5-4459-B666-C925810EC15F} */
 
         /* SyncableUserCode{5B6C3A39-85D8-47bc-B039-54765D18301B}:bfu5YXWBGJ */
         i++;
         /* SyncableUserCode{5B6C3A39-85D8-47bc-B039-54765D18301B} */
 
-    } while (i < 200);
+    } while (i < 300);
+
+    return;
+}
+
+/* Activity DistanceHandler of class RoverController */
+void RoverController_DistanceHandler(RoverController* const me)
+{
+    double distance;
+    /* start of activity code */
+    /* Setup for loop */
+    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8}:LXwqkabVSg */
+    int i = 0;
+
+    Sleep(1);
+    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8} */
+
+    do
+    {
+        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C}:1OXImpP2ti */
+        distance = getFirstParam(getLeaderDistance());
+
+        if (i < 2)
+        {
+            distance = 14;
+        }
+        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C} */
+
+        if (distance >= 12.7)
+        {
+            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D}:vNW2CEFsvI */
+            double speed = 15 * (distance * distance) - 360 * distance + 2170; // 2166.5
+            speed += 25 * (distance * distance) - 630 * distance + 3983; // 3978.75
+            speed += -5 * (distance * distance) + 170 * distance - 1314; // 3978.75
+            speed += -16.667 * (distance * distance) + 498.3 * distance - 3610; // 3978.75
+            speed /= 4;
+            if (speed > 100)
+            {
+                speed = 100;
+            }
+            else if (speed < 0)
+            {
+                speed = 0;
+            }
+
+            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D} */
+
+            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69}:J5shemUn8N */
+            setLRPower((int)speed, (int)speed);
+            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69} */
+        }
+        else if (distance < 12.7)
+        {
+            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9}:1TZC6m80BG */
+            setLRPower(0, 0);
+            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9} */
+        }
+        else
+        {
+        }
+        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5}:fSOJnDkv0w */
+        Sleep(150);
+        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5} */
+
+        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473}:bfu5YXWBGJ */
+        i++;
+        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473} */
+
+    } while (i < 400);
 
     return;
 }

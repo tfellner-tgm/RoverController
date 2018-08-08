@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::RoverController
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-07  - 17:46
+ * 2018-08-08  - 13:38
  * ***************************************************
  *  */
 #ifndef H_ROVERCONTROLLER
@@ -20,11 +20,11 @@ typedef int RoverController;
  * @return Pointer to the statically allocated structure for RoverController. */
 RoverController* RoverController_new(void);
 
-/* Activity DistanceHandler of class RoverController */
-void RoverController_DistanceHandler(RoverController* const me);
-
 /* Activity AngleHandler of class RoverController */
 void RoverController_AngleHandler(RoverController* const me);
+
+/* Activity DistanceHandler of class RoverController */
+void RoverController_DistanceHandler(RoverController* const me);
 
 #endif /* #ifndef H_ROVERCONTROLLER */
 
