@@ -55,8 +55,6 @@ int main(Main* const me)
     // Close all thread handles upon completion.
     CloseHandle(distanceHandler);
     CloseHandle(angleHandler);
-
-    getchar();
     /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C} */
 }
 
