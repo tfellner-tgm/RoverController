@@ -2,7 +2,7 @@
  * Model File: Model::Impelementation::RoverController::RoverController
  * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
  * 
- * 2018-08-08  - 13:38
+ * 2018-08-12  - 23:20
  * ***************************************************
  *  */
 #include "RoverController.h"
@@ -16,6 +16,81 @@ RoverController RoverController_me;
 RoverController* RoverController_new(void)
 {
     return &RoverController_me;
+}
+
+/* Activity DistanceHandler of class RoverController */
+void RoverController_DistanceHandler(RoverController* const me)
+{
+    double distance;
+    /* start of activity code */
+    /* Setup for loop */
+    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8}:LXwqkabVSg */
+    int i = 0;
+
+    Sleep(1);
+    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8} */
+
+    do
+    {
+        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C}:1OXImpP2ti */
+        distance = getFirstParam(getLeaderDistance());
+
+        if (i < 2)
+        {
+            distance = 14;
+        }
+        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C} */
+
+        if (distance >= 12.7)
+        {
+            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D}:HlLNHGIPgu */
+            double speed = 0.0;
+            if (distance < 13.5)
+            {
+                // quadratic equation
+                speed = 15 * (distance * distance) - 360 * distance + 2160;
+            }
+            else
+            {
+                // logistical growth
+                speed = 1 + (10 * 100) / (10 + (100 - 10) * exp(-(100 * 0.045 * (distance - 12.7))));
+            }
+
+            if (speed > 100)
+            {
+                speed = 100;
+            }
+            else if (speed < 0)
+            {
+                speed = 0;
+            }
+
+            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D} */
+
+            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69}:J5shemUn8N */
+            setLRPower((int)speed, (int)speed);
+            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69} */
+        }
+        else if (distance < 12.7)
+        {
+            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9}:1TZC6m80BG */
+            setLRPower(0, 0);
+            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9} */
+        }
+        else
+        {
+        }
+        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5}:fSOJnDkv0w */
+        Sleep(150);
+        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5} */
+
+        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473}:bfu5YXWBGJ */
+        i++;
+        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473} */
+
+    } while (i < 400);
+
+    return;
 }
 
 /* Activity AngleHandler of class RoverController */
@@ -83,74 +158,6 @@ void RoverController_AngleHandler(RoverController* const me)
         /* SyncableUserCode{5B6C3A39-85D8-47bc-B039-54765D18301B} */
 
     } while (i < 300);
-
-    return;
-}
-
-/* Activity DistanceHandler of class RoverController */
-void RoverController_DistanceHandler(RoverController* const me)
-{
-    double distance;
-    /* start of activity code */
-    /* Setup for loop */
-    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8}:LXwqkabVSg */
-    int i = 0;
-
-    Sleep(1);
-    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8} */
-
-    do
-    {
-        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C}:1OXImpP2ti */
-        distance = getFirstParam(getLeaderDistance());
-
-        if (i < 2)
-        {
-            distance = 14;
-        }
-        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C} */
-
-        if (distance >= 12.7)
-        {
-            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D}:vNW2CEFsvI */
-            double speed = 15 * (distance * distance) - 360 * distance + 2170; // 2166.5
-            speed += 25 * (distance * distance) - 630 * distance + 3983; // 3978.75
-            speed += -5 * (distance * distance) + 170 * distance - 1314; // 3978.75
-            speed += -16.667 * (distance * distance) + 498.3 * distance - 3610; // 3978.75
-            speed /= 4;
-            if (speed > 100)
-            {
-                speed = 100;
-            }
-            else if (speed < 0)
-            {
-                speed = 0;
-            }
-
-            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D} */
-
-            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69}:J5shemUn8N */
-            setLRPower((int)speed, (int)speed);
-            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69} */
-        }
-        else if (distance < 12.7)
-        {
-            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9}:1TZC6m80BG */
-            setLRPower(0, 0);
-            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9} */
-        }
-        else
-        {
-        }
-        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5}:fSOJnDkv0w */
-        Sleep(150);
-        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5} */
-
-        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473}:bfu5YXWBGJ */
-        i++;
-        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473} */
-
-    } while (i < 400);
 
     return;
 }
