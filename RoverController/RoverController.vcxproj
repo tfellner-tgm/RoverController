@@ -85,6 +85,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Thomas\source\repos\RoverController\RoverCommunicationLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,12 +122,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FSM.c" />
     <ClCompile Include="Main.c" />
+    <ClCompile Include="MissingTypes.c" />
     <ClCompile Include="RoverController.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FSM.h" />
+    <ClInclude Include="FSM_STATE.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="MissingTypes.h" />
     <ClInclude Include="RoverController.h" />
+    <ClInclude Include="Signals.h" />
+    <ClInclude Include="time_units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

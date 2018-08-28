@@ -1,8 +1,8 @@
 /* ***************************************************
  * Model File: Model::Impelementation::RoverController::Main
- * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
+ * Model Path: C:\Users\Thomas\source\repos\RoverController\RoverControllerModel.eap
  * 
- * 2018-08-12  - 23:20
+ * 2018-08-28  - 20:43
  * ***************************************************
  *  */
 #include "Main.h"
@@ -63,9 +63,13 @@ int main(Main* const me)
 /* Operation 'DistanceHandler' of class 'Main' */
 DWORD WINAPI Main_DistanceHandler(Main* const me)
 {
-    /* SyncableUserCode{EDFE8A71-1582-42a1-8C6D-9CE8C12403EA}:1FMyNhAA4Q */
+    /* SyncableUserCode{EDFE8A71-1582-42a1-8C6D-9CE8C12403EA}:fcSZnIfQu6 */
     RoverController* rc = RoverController_new();
-    RoverController_DistanceHandler(rc);
+    RoverController_DistanceHandler_init(rc, &rc->DistanceHandler);
+    while (&rc->DistanceHandler.mainState.activeSubState != RoverController_DistanceHandler_DistanceHandler_FINAL_1)
+    {
+        RoverController_DistanceHandler(rc, &rc->DistanceHandler, NOSIG);
+    }
 
     /* SyncableUserCode{EDFE8A71-1582-42a1-8C6D-9CE8C12403EA} */
 }

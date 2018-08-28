@@ -1,11 +1,17 @@
 /* ***************************************************
  * Model File: Model::Impelementation::RoverController::RoverController
- * Model Path: C:\Users\Thomas\source\repos\StaticLibrary\RoverControllerModel.eap
+ * Model Path: C:\Users\Thomas\source\repos\RoverController\RoverControllerModel.eap
  * 
- * 2018-08-12  - 23:20
+ * 2018-08-28  - 20:43
  * ***************************************************
  *  */
 #include "RoverController.h"
+
+static int i;
+
+static double speed = 0.0;
+
+static int distance = 0.0;
 
 /* Statically allocated instance. Automatically added and generated. */
 RoverController RoverController_me;
@@ -16,81 +22,6 @@ RoverController RoverController_me;
 RoverController* RoverController_new(void)
 {
     return &RoverController_me;
-}
-
-/* Activity DistanceHandler of class RoverController */
-void RoverController_DistanceHandler(RoverController* const me)
-{
-    double distance;
-    /* start of activity code */
-    /* Setup for loop */
-    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8}:LXwqkabVSg */
-    int i = 0;
-
-    Sleep(1);
-    /* SyncableUserCode{AC11ED8D-898E-4a1f-AE8E-7631B0FD91E8} */
-
-    do
-    {
-        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C}:1OXImpP2ti */
-        distance = getFirstParam(getLeaderDistance());
-
-        if (i < 2)
-        {
-            distance = 14;
-        }
-        /* SyncableUserCode{D32071E0-AF43-44df-A06B-F7371E40289C} */
-
-        if (distance >= 12.7)
-        {
-            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D}:HlLNHGIPgu */
-            double speed = 0.0;
-            if (distance < 13.5)
-            {
-                // quadratic equation
-                speed = 15 * (distance * distance) - 360 * distance + 2160;
-            }
-            else
-            {
-                // logistical growth
-                speed = 1 + (10 * 100) / (10 + (100 - 10) * exp(-(100 * 0.045 * (distance - 12.7))));
-            }
-
-            if (speed > 100)
-            {
-                speed = 100;
-            }
-            else if (speed < 0)
-            {
-                speed = 0;
-            }
-
-            /* SyncableUserCode{3AE64D02-CF15-4a15-A1D2-B80342BCAB1D} */
-
-            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69}:J5shemUn8N */
-            setLRPower((int)speed, (int)speed);
-            /* SyncableUserCode{97F5C2F7-F60C-44d4-A358-EC4CB5B1CF69} */
-        }
-        else if (distance < 12.7)
-        {
-            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9}:1TZC6m80BG */
-            setLRPower(0, 0);
-            /* SyncableUserCode{9D0866F8-ACDF-4842-911A-2184AC4655B9} */
-        }
-        else
-        {
-        }
-        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5}:fSOJnDkv0w */
-        Sleep(150);
-        /* SyncableUserCode{12B56C32-674D-48f5-93E8-29CAECA988A5} */
-
-        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473}:bfu5YXWBGJ */
-        i++;
-        /* SyncableUserCode{0DEBF4E0-A1D6-4c0e-81CD-1A75B7AA9473} */
-
-    } while (i < 400);
-
-    return;
 }
 
 /* Activity AngleHandler of class RoverController */
@@ -160,5 +91,186 @@ void RoverController_AngleHandler(RoverController* const me)
     } while (i < 300);
 
     return;
+}
+
+/* Handles the state machine */
+bool RoverController_DistanceHandler(RoverController* const me, RoverController_DistanceHandler_STM* stm, /*  Pointer to the current state machine instance */
+                                     Signals msg /*  Signal for the state machine */
+                                     )
+{
+    bool evConsumed = !1; /* Indicates if the event has already been consumed */
+    switch (stm->mainState.activeSubState)
+    {
+    case RoverController_DistanceHandler_Calculate_Bounds:
+
+        evConsumed = !0;
+        /* From 'Calculate Bounds' to 'Set Speed' */
+        stm->mainState.activeSubState = RoverController_DistanceHandler_Set_Speed;
+        /* User-supplied code: Operation 'setSpeed', {E8C20C37-0F1D-4831-9E53-2B10C62A6D12} */
+        setLRPower((int)speed, (int)speed);
+        /* end of entry actions for state Set Speed */
+
+        break;
+    case RoverController_DistanceHandler_Calculate_Distance:
+
+        /* From 'Calculate Distance' to 'Distance?' */
+
+        if (distance < 12.7)
+        {
+            evConsumed = !0;
+            /* From 'Distance?' to 'Too close' */
+            stm->mainState.activeSubState = RoverController_DistanceHandler_Too_close;
+            /* User-supplied code: Operation 'distanceZero', {1174C801-C1AA-4291-98F3-B79EA2B56007} */
+            speed = 0.0;
+            /* end of entry actions for state Too close */
+        }
+        else if (distance >= 12.7 && distance < 13.5)
+        {
+            evConsumed = !0;
+            /* From 'Distance?' to 'Mid Range' */
+            stm->mainState.activeSubState = RoverController_DistanceHandler_Mid_Range;
+            /* User-supplied code: Operation 'quadraticEquation', {4F6863D2-AD6D-4715-AE82-8FDA022B707A} */
+            // quadratic equation
+            speed = 15 * (distance * distance) - 360 * distance + 2160;
+            /* end of entry actions for state Mid Range */
+        }
+        else
+        {
+            evConsumed = !0;
+            /* From 'Distance?' to 'Too Far' */
+            stm->mainState.activeSubState = RoverController_DistanceHandler_Too_Far;
+            /* User-supplied code: Operation 'logisticalGrowth', {7C30788F-C8B2-4006-BA27-1CA60B3DF722} */
+            // logistical growth
+            speed = 1 + (10 * 100) / (10 + (100 - 10) * exp(-(100 * 0.045 * (distance - 12.7))));
+            /* end of entry actions for state Too Far */
+        }
+
+        break;
+    case RoverController_DistanceHandler_DistanceHandler_FINAL_1:
+        break;
+    case RoverController_DistanceHandler_Increment:
+
+        if (FSM_checkTimeEvent(&(stm->Increment), 150, TIME_MILLISECONDS) != !1)
+        {
+            /* From 'Increment' to 'Check Increment' */
+
+            if (i < 400)
+            {
+                evConsumed = !0;
+                /* From 'Check Increment' to 'Calculate Distance' */
+                stm->mainState.activeSubState = RoverController_DistanceHandler_Calculate_Distance;
+                /* User-supplied code: Operation 'calculateDistance', {2EEBCD1C-A2AB-4f5c-9120-ABEC59F92280} */
+                distance = getFirstParam(getLeaderDistance());
+
+                if (i < 2)
+                {
+                    distance = 14;
+                }
+                /* end of entry actions for state Calculate Distance */
+            }
+            else
+            {
+                evConsumed = !0;
+                /* From 'Check Increment' to 'Final' */
+                stm->mainState.activeSubState = RoverController_DistanceHandler_DistanceHandler_FINAL_1;
+            }
+        }
+        break;
+    case RoverController_DistanceHandler_Mid_Range:
+
+        evConsumed = !0;
+        /* From 'Mid Range' to 'Calculate Bounds' */
+        stm->mainState.activeSubState = RoverController_DistanceHandler_Calculate_Bounds;
+        /* User-supplied code: Operation 'calculateBounds', {1DB6B35A-1B85-4f60-93E2-696715DFEAB5} */
+        if (speed > 100)
+        {
+            speed = 100;
+        }
+        else if (speed < 0)
+        {
+            speed = 0;
+        }
+        /* end of entry actions for state Calculate Bounds */
+
+        break;
+    case RoverController_DistanceHandler_Set_Speed:
+
+        evConsumed = !0;
+        /* From 'Set Speed' to 'Increment' */
+        stm->mainState.activeSubState = RoverController_DistanceHandler_Increment;
+        stm->Increment.startTime = FSM_getTime();
+        /* User-supplied code: Operation 'increment', {0C99E8F6-7167-49bd-9FC6-01468FA3A150} */
+        i++;
+        /* end of entry actions for state Increment */
+
+        break;
+    case RoverController_DistanceHandler_Too_close:
+
+        evConsumed = !0;
+        /* From 'Too close' to 'Calculate Bounds' */
+        stm->mainState.activeSubState = RoverController_DistanceHandler_Calculate_Bounds;
+        /* User-supplied code: Operation 'calculateBounds', {1DB6B35A-1B85-4f60-93E2-696715DFEAB5} */
+        if (speed > 100)
+        {
+            speed = 100;
+        }
+        else if (speed < 0)
+        {
+            speed = 0;
+        }
+        /* end of entry actions for state Calculate Bounds */
+
+        break;
+    case RoverController_DistanceHandler_Too_Far:
+
+        evConsumed = !0;
+        /* From 'Too Far' to 'Calculate Bounds' */
+        stm->mainState.activeSubState = RoverController_DistanceHandler_Calculate_Bounds;
+        /* User-supplied code: Operation 'calculateBounds', {1DB6B35A-1B85-4f60-93E2-696715DFEAB5} */
+        if (speed > 100)
+        {
+            speed = 100;
+        }
+        else if (speed < 0)
+        {
+            speed = 0;
+        }
+        /* end of entry actions for state Calculate Bounds */
+
+        break;
+    default:
+        break;
+    }
+    return evConsumed;
+}
+
+/* Initialization code for this state machine */
+void RoverController_DistanceHandler_init(RoverController* const me, RoverController_DistanceHandler_STM* const stm)
+{
+    /* State: Calculate Bounds */
+    stm->Calculate_Bounds.activeSubState = RoverController_DistanceHandler_NOSTATE;
+    /* State: Calculate Distance */
+    stm->Calculate_Distance.activeSubState = RoverController_DistanceHandler_NOSTATE;
+    /* State: Increment */
+    stm->Increment.activeSubState = RoverController_DistanceHandler_NOSTATE;
+    /* State: Mid Range */
+    stm->Mid_Range.activeSubState = RoverController_DistanceHandler_NOSTATE;
+    /* State: Set Speed */
+    stm->Set_Speed.activeSubState = RoverController_DistanceHandler_NOSTATE;
+    /* State: Too close */
+    stm->Too_close.activeSubState = RoverController_DistanceHandler_NOSTATE;
+    /* State: Too Far */
+    stm->Too_Far.activeSubState = RoverController_DistanceHandler_NOSTATE;
+
+    /* From 'Initial' to 'Calculate Distance' */
+    stm->mainState.activeSubState = RoverController_DistanceHandler_Calculate_Distance;
+    /* User-supplied code: Operation 'calculateDistance', {2EEBCD1C-A2AB-4f5c-9120-ABEC59F92280} */
+    distance = getFirstParam(getLeaderDistance());
+
+    if (i < 2)
+    {
+        distance = 14;
+    }
+    /* end of entry actions for state Calculate Distance */
 }
 

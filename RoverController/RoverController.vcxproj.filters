@@ -21,12 +21,33 @@
     <ClCompile Include="RoverController.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FSM.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MissingTypes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RoverController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MissingTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Signals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="time_units.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
