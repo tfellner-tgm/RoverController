@@ -1,8 +1,8 @@
 /* ***************************************************
  * Model File: Model::Impelementation::RoverController::RoverController
- * Model Path: C:\Users\Thomas\source\repos\RoverController\RoverControllerModel.eap
+ * Model Path: C:\Users\Thomas\source\repos\RoverController2\RoverControllerModel.eap
  * 
- * 2018-08-28  - 20:43
+ * 2018-09-25  - 16:12
  * ***************************************************
  *  */
 #ifndef H_ROVERCONTROLLER
@@ -24,6 +24,7 @@ typedef enum {
     RoverController_DistanceHandler_Calculate_Distance,
     RoverController_DistanceHandler_DistanceHandler_FINAL_1,
     RoverController_DistanceHandler_Increment,
+    RoverController_DistanceHandler_Initial,
     RoverController_DistanceHandler_Mid_Range,
     RoverController_DistanceHandler_Set_Speed,
     RoverController_DistanceHandler_Too_close,
@@ -36,6 +37,7 @@ typedef struct RoverController_DistanceHandler_STMStruct
     FSM_STATE Calculate_Bounds; /* State variable for state Calculate Bounds */
     FSM_STATE Calculate_Distance; /* State variable for state Calculate Distance */
     FSM_STATE Increment; /* State variable for state Increment */
+    FSM_STATE Initial; /* State variable for state Initial */
     FSM_STATE Mid_Range; /* State variable for state Mid Range */
     FSM_STATE Set_Speed; /* State variable for state Set Speed */
     FSM_STATE Too_close; /* State variable for state Too close */
@@ -44,6 +46,9 @@ typedef struct RoverController_DistanceHandler_STMStruct
 
 typedef struct RoverControllerStruct
 {
+    int counter;
+    double speed;
+    int distance;
     RoverController_DistanceHandler_STM DistanceHandler;
 } RoverController;
 
@@ -52,9 +57,6 @@ typedef struct RoverControllerStruct
  * @return Pointer to the statically allocated structure for RoverController. */
 RoverController* RoverController_new(void);
 
-/* Activity AngleHandler of class RoverController */
-void RoverController_AngleHandler(RoverController* const me);
-
 /* Handles the state machine */
 bool RoverController_DistanceHandler(RoverController* const me, RoverController_DistanceHandler_STM* stm, /*  Pointer to the current state machine instance */
                                      Signals msg /*  Signal for the state machine */
@@ -62,6 +64,9 @@ bool RoverController_DistanceHandler(RoverController* const me, RoverController_
 
 /* Initialization code for this state machine */
 void RoverController_DistanceHandler_init(RoverController* const me, RoverController_DistanceHandler_STM* const stm);
+
+/* Activity AngleHandler of class RoverController */
+void RoverController_AngleHandler(RoverController* const me);
 
 #endif /* #ifndef H_ROVERCONTROLLER */
 

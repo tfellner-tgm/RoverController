@@ -34,29 +34,56 @@ code { white-space: pre; font-size: 1em; font-family: Consolas;  }
 			User Code Change Report
 		</h1><table id="modelInfo">
 			<tr>
-				<td>Model</td><td>C:\Users\Thomas\source\repos\RoverController\RoverControllerModel.eap</td>
+				<td>Model</td><td>C:\Users\Thomas\source\repos\RoverController2\RoverControllerModel.eap</td>
 			</tr><tr>
 				<td>Embedded Engineer</td><td>2.2.0.0</td>
 			</tr><tr>
 				<td>Enterprise Architect</td><td>1423</td>
 			</tr><tr>
-				<td>Date</td><td>8/28/2018 8:43 PM</td>
+				<td>Date</td><td>9/7/2018 2:40 AM</td>
 			</tr>
 		</table><br /><h2>
 			The following changes have been detected since last time generating code for this model:
 		</h2><br /><table id="codeChanges">
 			<col class="infoColumn" /><col class="codeColumn" /><col class="codeColumn" /><tr>
-				<th title="DistanceHandler {EDFE8A71-1582-42a1-8C6D-9CE8C12403EA}" class="codeChanges">Operation <q class="importantInfo">DistanceHandler</q> {EDFE8A71-1582-42a1-8C6D-9CE8C12403EA}</th><th class="codeChanges" title="The differences between Model and Code">Differences Model <=> Code</th><th class="codeChanges" title="The Code currently stored in the Model after sync and generating code">New Value in Model</th>
+				<th title="main {05E46EA2-BBBF-4249-8908-5AB399ED732C}" class="codeChanges">Operation <q class="importantInfo">main</q> {05E46EA2-BBBF-4249-8908-5AB399ED732C}</th><th class="codeChanges" title="The differences between Model and Code">Differences Model <=> Code</th><th class="codeChanges" title="The Code currently stored in the Model after sync and generating code">New Value in Model</th>
 			</tr><tr>
 				<td class="contentRow"><em title="Detected changes in generated code.
-Synced model with code.">Changed: Code</em><br /><br /><span title="Model::Impelementation::RoverController::Main::DistanceHandler">Model::Impelementation::RoverController::Main::DistanceHandler</span><br /><br /><span title="C:\Users\Thomas\source\repos\RoverController\RoverController\Main.c">C:\Users\Thomas\source\repos\RoverController\RoverController\Main.c</span></td><td class="contentRow" title="The difference between the model code and the synced code
+Synced model with code.">Changed: Code</em><br /><br /><span title="Model::Impelementation::RoverController::Main::main">Model::Impelementation::RoverController::Main::main</span><br /><br /><span title="C:\Users\Thomas\source\repos\RoverController2\RoverController\Main.c">C:\Users\Thomas\source\repos\RoverController2\RoverController\Main.c</span></td><td class="contentRow" title="The difference between the model code and the synced code
 Green: added in the code file
-Red: not present in the code file"><code><span>RoverController* rc = RoverController_new();</span><ins>	RoverController_DistanceHandler_init(rc, &amp;rc-&gt;DistanceHandler);	while (&amp;rc-&gt;DistanceHandler.mainState.activeSubState != RoverController_DistanceHandler_DistanceHandler_FINAL_1) {		</ins><span>RoverController_DistanceHandler(rc, &amp;rc-&gt;DistanceHandler, NOSIG);</span><ins>	}</ins></code></td><td class="contentRow" title="The code written back to the model"><code>RoverController* rc = RoverController_new();
-	RoverController_DistanceHandler_init(rc, &amp;rc-&gt;DistanceHandler);
-	while (&amp;rc-&gt;DistanceHandler.mainState.activeSubState != RoverController_DistanceHandler_DistanceHandler_FINAL_1) {
-		RoverController_DistanceHandler(rc, &amp;rc-&gt;DistanceHandler, NOSIG);
-	}
-</code></td>
+Red: not present in the code file"><code><span>// setup sockets and print ready statementssetupSockets();printf("%s\n", sendReady());// Data of Thread 1int DistanceHandlerData = 1;// Data of Thread 2int AngleHandlerData = 2;// Array to store thread handlesHANDLE ThreadHandles[2];// Create HandlesHANDLE distanceHandler = CreateThread(NULL, 0, Main_DistanceHandler, &amp;DistanceHandlerData, 0, NULL);if (distanceHandler == NULL)    ExitProcess(DistanceHandlerData);HANDLE angleHandler = CreateThread(NULL, 0, Main_AngleHandler, &amp;AngleHandlerData, 0, NULL);if (angleHandler == NULL)    ExitProcess(AngleHandlerData);ThreadHandles[0] = distanceHandler;ThreadHandles[1] = angleHandler;WaitForMultipleObjects(2, ThreadHandles, TRUE, INFINITE);brake(100);// shutdown socketsshutdownSockets();// Close all thread handles upon completion.CloseHandle(distanceHandler);CloseHandle(angleHandler);</span><del>getchar();</del></code></td><td class="contentRow" title="The code written back to the model"><code>// setup sockets and print ready statements
+setupSockets();
+printf(&quot;%s\n&quot;, sendReady());
+
+// Data of Thread 1
+int DistanceHandlerData = 1;
+// Data of Thread 2
+int AngleHandlerData = 2;
+// Array to store thread handles
+HANDLE ThreadHandles[2];
+
+// Create Handles
+HANDLE distanceHandler = CreateThread(NULL, 0, Main_DistanceHandler, &amp;DistanceHandlerData, 0, NULL);
+if (distanceHandler == NULL)
+    ExitProcess(DistanceHandlerData);
+
+HANDLE angleHandler = CreateThread(NULL, 0, Main_AngleHandler, &amp;AngleHandlerData, 0, NULL);
+if (angleHandler == NULL)
+    ExitProcess(AngleHandlerData);
+
+ThreadHandles[0] = distanceHandler;
+ThreadHandles[1] = angleHandler;
+
+WaitForMultipleObjects(2, ThreadHandles, TRUE, INFINITE);
+
+brake(100);
+
+// shutdown sockets
+shutdownSockets();
+
+// Close all thread handles upon completion.
+CloseHandle(distanceHandler);
+CloseHandle(angleHandler);</code></td>
 			</tr><tr>
 				<td colspan="3" class="emptyRow"></td>
 			</tr>

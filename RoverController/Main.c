@@ -1,8 +1,8 @@
 /* ***************************************************
  * Model File: Model::Impelementation::RoverController::Main
- * Model Path: C:\Users\Thomas\source\repos\RoverController\RoverControllerModel.eap
+ * Model Path: C:\Users\Thomas\source\repos\RoverController2\RoverControllerModel.eap
  * 
- * 2018-08-28  - 20:43
+ * 2018-09-25  - 16:12
  * ***************************************************
  *  */
 #include "Main.h"
@@ -21,7 +21,7 @@ Main* Main_new(void)
 /* Operation 'main' of class 'Main' */
 int main(Main* const me)
 {
-    /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C}:vzsLfqCRxu */
+    /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C}:z2ryPMn2O9 */
     // setup sockets and print ready statements
     setupSockets();
     printf("%s\n", sendReady());
@@ -55,18 +55,16 @@ int main(Main* const me)
     // Close all thread handles upon completion.
     CloseHandle(distanceHandler);
     CloseHandle(angleHandler);
-
-    getchar();
     /* SyncableUserCode{05E46EA2-BBBF-4249-8908-5AB399ED732C} */
 }
 
 /* Operation 'DistanceHandler' of class 'Main' */
 DWORD WINAPI Main_DistanceHandler(Main* const me)
 {
-    /* SyncableUserCode{EDFE8A71-1582-42a1-8C6D-9CE8C12403EA}:fcSZnIfQu6 */
+    /* SyncableUserCode{EDFE8A71-1582-42a1-8C6D-9CE8C12403EA}:UJNFDtjhDB */
     RoverController* rc = RoverController_new();
     RoverController_DistanceHandler_init(rc, &rc->DistanceHandler);
-    while (&rc->DistanceHandler.mainState.activeSubState != RoverController_DistanceHandler_DistanceHandler_FINAL_1)
+    while (rc->DistanceHandler.mainState.activeSubState != RoverController_DistanceHandler_DistanceHandler_FINAL_1)
     {
         RoverController_DistanceHandler(rc, &rc->DistanceHandler, NOSIG);
     }
